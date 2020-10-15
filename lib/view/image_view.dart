@@ -1,14 +1,12 @@
 import 'dart:io';
 import 'dart:typed_data';
 import 'dart:ui';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:url_launcher/url_launcher.dart';
 //import 'dart:js' as js;
 
 class ImageView extends StatefulWidget {
@@ -22,13 +20,10 @@ class ImageView extends StatefulWidget {
 
 class _ImageViewState extends State<ImageView> {
   var filePath;
-
-  _launchURL(String url) async {
-    if (await canLaunch(url)) {
-      await launch(url);
-    } else {
-      throw 'Could not launch $url';
-    }
+  @override
+  void initState() {
+    super.initState();
+    _askPermission();
   }
 
   @override
@@ -39,18 +34,9 @@ class _ImageViewState extends State<ImageView> {
           Hero(
             tag: widget.imgPath,
             child: Container(
-              height: MediaQuery.of(context).size.height,
-              width: MediaQuery.of(context).size.width,
-              child: kIsWeb
-                  ? Image.network(widget.imgPath, fit: BoxFit.cover)
-                  : CachedNetworkImage(
-                      imageUrl: widget.imgPath,
-                      placeholder: (context, url) => Container(
-                        color: Color(0xfff5f8fd),
-                      ),
-                      fit: BoxFit.cover,
-                    ),
-            ),
+                height: MediaQuery.of(context).size.height,
+                width: MediaQuery.of(context).size.width,
+                child: Image.network(widget.imgPath, fit: BoxFit.cover)),
           ),
           Container(
             height: MediaQuery.of(context).size.height,
@@ -59,16 +45,9 @@ class _ImageViewState extends State<ImageView> {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
-                InkWell(
+                GestureDetector(
                     onTap: () {
-                      if (kIsWeb) {
-                        _launchURL(widget.imgPath);
-                        //js.context.callMethod('downloadUrl',[widget.imgPath]);
-                        //response = await dio.download(widget.imgPath, "./xx.html");
-                      } else {
-                        _save();
-                      }
-                      //Navigator.pop(context);
+                      _save();
                     },
                     child: Stack(
                       children: <Widget>[
@@ -109,9 +88,7 @@ class _ImageViewState extends State<ImageView> {
                                   height: 1,
                                 ),
                                 Text(
-                                  kIsWeb
-                                      ? "Image will open in new tab to download"
-                                      : "Image will be saved in gallery",
+                                  "image will be",
                                   style: TextStyle(
                                       fontSize: 8, color: Colors.white70),
                                 ),
@@ -146,23 +123,32 @@ class _ImageViewState extends State<ImageView> {
   }
 
   _save() async {
-    await _askPermission();
+    if (Platform.isAndroid) {
+      await _askPermission();
+    }
     var response = await Dio().get(widget.imgPath,
         options: Options(responseType: ResponseType.bytes));
     final result =
         await ImageGallerySaver.saveImage(Uint8List.fromList(response.data));
     print(result);
-    Navigator.pop(context);
   }
 
   _askPermission() async {
     if (Platform.isIOS) {
-      /*Map<PermissionGroup, PermissionStatus> permissions =
-          */await PermissionHandler()
+      Map<PermissionGroup, PermissionStatus> permissions =
+          await PermissionHandler()
               .requestPermissions([PermissionGroup.photos]);
     } else {
-     /* PermissionStatus permission = */await PermissionHandler()
+      PermissionStatus permissions = await PermissionHandler()
           .checkPermissionStatus(PermissionGroup.storage);
+      print(permissions);
+      if (permissions == PermissionStatus.denied) {
+        Map<PermissionGroup, PermissionStatus> permissions2 =
+            await PermissionHandler()
+                .requestPermissions([PermissionGroup.storage]);
+        print("then");
+        print(permissions2);
+      }
     }
   }
 }

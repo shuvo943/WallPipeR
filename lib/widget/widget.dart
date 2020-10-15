@@ -56,12 +56,16 @@ Widget brandName() {
     mainAxisAlignment: MainAxisAlignment.center,
     children: <Widget>[
       Text(
-        "Wallpaper",
+        "Paper ",
+        style: TextStyle(color: Colors.orangeAccent, fontFamily: 'Overpass'),
+      ),
+      Text(
+        "Of  ",
         style: TextStyle(color: Colors.black87, fontFamily: 'Overpass'),
       ),
       Text(
-        "Hub",
-        style: TextStyle(color: Colors.blue, fontFamily: 'Overpass'),
+        "Wall",
+        style: TextStyle(color: Colors.orangeAccent, fontFamily: 'Overpass'),
       )
     ],
   );

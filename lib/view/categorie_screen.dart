@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 import 'package:wallpaper/data/data.dart';
 import 'package:wallpaper/models/photos_model.dart';
@@ -39,27 +40,39 @@ class _CategorieScreenState extends State<CategorieScreen> {
   @override
   void initState() {
     getCategorieWallpaper();
+
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.amber,
       appBar: AppBar(
+        backgroundColor: Colors.pink,
         title: brandName(),
         elevation: 0.0,
         actions: <Widget>[
           Container(
               padding: EdgeInsets.symmetric(horizontal: 16),
-              child: Icon(
-                Icons.add,
-                color: Colors.white,
+              child: InkWell(
+                onTap: () {
+                  Fluttertoast.showToast(
+                      msg: "Watch All Over",
+                      gravity: ToastGravity.TOP_RIGHT,
+                      fontSize: 20,
+                      backgroundColor: Colors.red,
+                      textColor: Colors.black);
+                },
+                child: Icon(
+                  Icons.search,
+                  color: Colors.white,
+                ),
               ))
         ],
       ),
       body: SingleChildScrollView(
-        child: wallPaper(photos, context)
-        ,
+        child: wallPaper(photos, context),
       ),
     );
   }

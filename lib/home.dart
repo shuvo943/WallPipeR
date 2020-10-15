@@ -73,17 +73,19 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.pink,
         title: brandName(),
         elevation: 0.0,
       ),
-      backgroundColor: Colors.white,
+      backgroundColor: Colors.orange,
       body: SingleChildScrollView(
+        padding: EdgeInsets.only(top: 8),
         child: Container(
           child: Column(
             children: <Widget>[
               Container(
                 decoration: BoxDecoration(
-                  color: Color(0xfff5f8fd),
+                  color: Colors.teal,
                   borderRadius: BorderRadius.circular(30),
                 ),
                 margin: EdgeInsets.symmetric(horizontal: 24),
@@ -119,7 +121,7 @@ class _HomeState extends State<Home> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   Text(
-                    "Made By ",
+                    "Dev By ",
                     style: TextStyle(
                         color: Colors.black54,
                         fontSize: 12,
@@ -127,13 +129,13 @@ class _HomeState extends State<Home> {
                   ),
                   GestureDetector(
                     onTap: () {
-                      _launchURL("https://www.linkedin.com/in/lamsanskar/");
+                      _launchURL("https://www.facebook.com/shariare.shuvo/");
                     },
                     child: Container(
                         child: Text(
-                      "Sanskar Tiwari",
+                      "Shariare Shuvo",
                       style: TextStyle(
-                          color: Colors.blue,
+                          color: Colors.black,
                           fontSize: 12,
                           fontFamily: 'Overpass'),
                     )),
@@ -166,7 +168,7 @@ class _HomeState extends State<Home> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   Text(
-                    "Photos provided By ",
+                    "CopyRights ",
                     style: TextStyle(
                         color: Colors.black54,
                         fontSize: 12,
@@ -178,9 +180,9 @@ class _HomeState extends State<Home> {
                     },
                     child: Container(
                         child: Text(
-                      "Pexels",
+                      "8 Sense Tech.",
                       style: TextStyle(
-                          color: Colors.blue,
+                          color: Colors.black,
                           fontSize: 12,
                           fontFamily: 'Overpass'),
                     )),
