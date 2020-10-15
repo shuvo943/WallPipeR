@@ -2,9 +2,9 @@ import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:wallpaper/data/data.dart';
-import 'package:wallpaper/models/photos_model.dart';
-import 'package:wallpaper/widget/widget.dart';
+import 'package:wallpiper/data/data.dart';
+import 'package:wallpiper/models/photos_model.dart';
+import 'package:wallpiper/widget/widget.dart';
 
 class SearchView extends StatefulWidget {
   final String search;

@@ -1,4 +1,4 @@
-import 'package:wallpaper/models/categorie_model.dart';
+import 'package:wallpiper/models/categorie_model.dart';
 
 String apiKEY = "563492ad6f91700001000001500d9e3d792245dcb464167fcfd50788";
 

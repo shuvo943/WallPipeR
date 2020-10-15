@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:wallpaper/home.dart';
+import 'package:wallpiper/home.dart';
 
 void main() {
   runApp(MyApp());
